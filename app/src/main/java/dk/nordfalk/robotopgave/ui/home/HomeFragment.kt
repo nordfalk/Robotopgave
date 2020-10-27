@@ -63,13 +63,23 @@ class HomeFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             println("onCreateViewHolder ")
             val itemView: View = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
-            return object : RecyclerView.ViewHolder(itemView) {}
+            return object : RecyclerView.ViewHolder(itemView) {
+                init {
+                    itemView.setOnClickListener {
+                        println("HURRA!!")
+                        homeViewModel.valgtProgram = adapterPosition;
+                        notifyDataSetChanged()
+                    }
+                }
+            }
         }
 
         override fun onBindViewHolder(vh: RecyclerView.ViewHolder, position: Int) {
             println("onBindViewHolder $position")
             val overskrift = vh.itemView.findViewById<TextView>(android.R.id.text1)
             overskrift.setText(elem.get(position))
+            vh.itemView.background =
+                if (homeViewModel.valgtProgram == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
         }
     }
 
@@ -104,9 +114,8 @@ class HomeFragment : Fragment() {
                 vh.billede.setImageResource(android.R.drawable.sym_action_email)
             }
             //vh.itemView.isSelected = (homeViewModel.valgtRum == vh.adapterPosition);
-            vh.itemView.background = if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(
-                R.color.teal_200
-            ) else null
+            vh.itemView.background =
+                if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
 
         }
     }

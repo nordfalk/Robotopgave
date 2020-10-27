@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    var valgtRum: Int = -1;
+    var valgtProgram: Int = -1
+    var valgtRum: Int = -1
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
     }
