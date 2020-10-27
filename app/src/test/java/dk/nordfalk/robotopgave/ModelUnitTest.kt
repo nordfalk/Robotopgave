@@ -1,9 +1,7 @@
 package dk.nordfalk.robotopgave
 
-import dk.nordfalk.robotopgave.model.Position
-import dk.nordfalk.robotopgave.model.Retning
-import dk.nordfalk.robotopgave.model.Robot
-import dk.nordfalk.robotopgave.model.Rum
+import dk.nordfalk.robotopgave.model.*
+import dk.nordfalk.robotopgave.model.Retning.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -16,11 +14,7 @@ class ModelUnitTest {
     @Test
     fun udleveretTest() {
         val rum = Rum(5, 5)
-        val position = Position(
-            1,
-            2,
-            Retning.N
-        )
+        val position = Position(1, 2, N)
         val robot = Robot(rum, position)
         println("robot = $robot")
 
@@ -33,14 +27,7 @@ class ModelUnitTest {
 
     @Test
     fun forLidtPlads() {
-        val robot = Robot(
-            Rum(1, 1),
-            Position(
-                0,
-                0,
-                Retning.N
-            )
-        )
+        val robot = Robot(Rum(1, 1), Position(0, 0, N))
         robot.execute("RFRFFRFRF")
         println("robot = " + robot.report)
         assertEquals("0 0 N", robot.report)
@@ -50,14 +37,7 @@ class ModelUnitTest {
 
     @Test
     fun udleveretTest2() {
-        val robot = Robot(
-            Rum(5, 5),
-            Position(
-                0,
-                0,
-                Retning.E
-            )
-        )
+        val robot = Robot(Rum(5, 5), Position(0, 0, E))
         robot.execute("RFLFFLRF")
         println("robot = " + robot.report)
         assertEquals("3 1 E", robot.report)
@@ -66,17 +46,21 @@ class ModelUnitTest {
 
     @Test
     fun forLidtPlads2() {
-        val robot = Robot(
-            Rum(1, 1),
-            Position(
-                0,
-                0,
-                Retning.E
-            )
-        )
+        val robot = Robot(Rum(1, 1), Position(0, 0, E))
         robot.execute("RFLFFLRF")
         println("robot = " + robot.report)
         assertEquals("0 0 E", robot.report)
+    }
+
+
+
+    @Test
+    fun standardværdierIModel() {
+        val m = Model()
+        val robot = Robot(m.rum[0], m.positioner[0])
+        robot.execute(m.programmer[0])
+        println("robot = " + robot.report)
+        assertEquals("1 3 N", robot.report)
     }
 
 
