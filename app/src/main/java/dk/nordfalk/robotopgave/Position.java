@@ -10,4 +10,13 @@ public class Position {
         this.y = y;
         this.retning = retning;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                ", retning=" + retning +
+                '}';
+    }
 }

@@ -8,4 +8,12 @@ public class Rum {
         this.bredde = bredde;
         this.højde = højde;
     }
+
+    @Override
+    public String toString() {
+        return "Rum{" +
+                "bredde=" + bredde +
+                ", højde=" + højde +
+                '}';
+    }
 }
