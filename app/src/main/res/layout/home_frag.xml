@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/overskriftVaelgSituation"
         app:layout_constraintVertical_weight="1"
         tools:itemCount="3"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/home_starttilstand_item" />
 
     <TextView
         android:id="@+id/overskriftVaelgProgram"
@@ -55,7 +55,7 @@
         app:layout_constraintVertical_weight="1"
 
         tools:itemCount="3"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/home_starttilstand_item" />
 
     <Button
         android:id="@+id/buttonKør"

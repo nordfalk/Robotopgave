@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.nordfalk.robotopgave.R
 import dk.nordfalk.robotopgave.model.Model
-import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.recycler_view_item.view.*
+import kotlinx.android.synthetic.main.home_frag.view.*
+import kotlinx.android.synthetic.main.home_starttilstand_item.view.*
 
 class HomeFragment : Fragment() {
 
@@ -30,26 +30,32 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-
-        val textView: TextView = root.findViewById(R.id.buttonKør)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
-        root.buttonKør.setOnClickListener {
-            findNavController().navigate(R.id.navigation_notifications)
-        }
+        val root = inflater.inflate(R.layout.home_frag, container, false)
 
 
         root.recyclerViewSituation.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewSituation.adapter = starttilstandadapter
         ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewSituation)
 
-
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
 
+        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+            root.buttonKør.text = it
+        })
+
+        root.buttonKør.setOnClickListener {
+            findNavController().navigate(R.id.navigation_notifications)
+        }
+
+        root.fabTilfStartsituation.setOnClickListener {
+            findNavController().navigate(R.id.navigation_dashboard)
+        }
+
+        root.fabTilfProgram.setOnClickListener {
+            // DialogFragment har mulighed for at vises som en dialog
+            TekstDialog_frag().show(parentFragmentManager, "dialog")
+        }
 
         return root
     }
@@ -94,7 +100,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
-            val view: View = layoutInflater.inflate(R.layout.recycler_view_item, parent, false)
+            val view: View = layoutInflater.inflate(R.layout.home_starttilstand_item, parent, false)
             val vh = StarttilstandViewholder(view)
             println("HURRA!22!")
             view.setOnClickListener {

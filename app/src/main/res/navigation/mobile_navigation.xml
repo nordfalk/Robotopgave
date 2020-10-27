@@ -9,17 +9,17 @@
         android:id="@+id/navigation_home"
         android:name="dk.nordfalk.robotopgave.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/home_frag" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="dk.nordfalk.robotopgave.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/dashboard_frag" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="dk.nordfalk.robotopgave.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/notifications_frag" />
 </navigation>
