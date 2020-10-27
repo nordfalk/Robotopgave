@@ -1,5 +1,7 @@
 package dk.nordfalk.robotopgave.model;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 
 import static dk.nordfalk.robotopgave.model.Retning.*;
@@ -15,6 +17,7 @@ public class Model {
 
     public ArrayList<Robottilstand> starttilstande = new ArrayList<>();
     public ArrayList<String> programmer = new ArrayList<>();
+    public MutableLiveData<String> programmer_livedata = new MutableLiveData<String>();
 
 
     public Model() {

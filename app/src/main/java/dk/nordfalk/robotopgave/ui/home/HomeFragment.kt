@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
 
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
+        Model.get().programmer_livedata.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged() })
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             root.buttonKør.text = it
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
 
         root.fabTilfProgram.setOnClickListener {
             // DialogFragment har mulighed for at vises som en dialog
-            TekstDialog_frag().show(parentFragmentManager, "dialog")
+            NytProgramDialogFragment().show(parentFragmentManager, "dialog")
         }
 
         return root
