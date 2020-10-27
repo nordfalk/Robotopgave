@@ -1,6 +1,5 @@
 package dk.nordfalk.robotopgave.ui.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,31 +42,50 @@ class HomeFragment : Fragment() {
         }
 
 
-        var recyclerView = root.recyclerViewSituation
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = rumadapter
-        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        root.recyclerViewSituation.layoutManager = LinearLayoutManager(activity)
+        root.recyclerViewSituation.adapter = starttilstandadapter
+        ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewSituation)
+
+
+        root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
+        root.recyclerViewProgram.adapter = programadapter
 
 
         return root
     }
 
-
-
-    // Vi laver en arrayliste så vi kan fjerne/indsætte elementer
-    var rum = Model.get().starttilstande
-
-
-    var rumadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RumViewholder>() {
-
+    var programadapter: RecyclerView.Adapter<*> = object :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        var elem = Model.get().programmer
         override fun getItemCount(): Int {
-            return rum.size
+            return elem.size
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RumViewholder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            println("onCreateViewHolder ")
+            val itemView: View = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+            return object : RecyclerView.ViewHolder(itemView) {}
+        }
+
+        override fun onBindViewHolder(vh: RecyclerView.ViewHolder, position: Int) {
+            println("onBindViewHolder $position")
+            val overskrift = vh.itemView.findViewById<TextView>(android.R.id.text1)
+            overskrift.setText(elem.get(position))
+        }
+    }
+
+
+
+
+    var starttilstande = Model.get().starttilstande
+    var starttilstandadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<StarttilstandViewholder>() {
+
+        override fun getItemCount(): Int {
+            return starttilstande.size
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
             val view: View = layoutInflater.inflate(R.layout.recycler_view_item, parent, false)
-            val vh = RumViewholder(view)
+            val vh = StarttilstandViewholder(view)
             println("HURRA!22!")
             view.setOnClickListener {
                 println("HURRA!!")
@@ -77,22 +95,24 @@ class HomeFragment : Fragment() {
             return vh
         }
 
-        override fun onBindViewHolder(vh: RumViewholder, position: Int) {
-            vh.overskrift.setText(rum.get(position).report)
-            vh.beskrivelse!!.text = rum.get(position).toString()
-            if (position % 3 == 2) {
-                vh.billede!!.setImageResource(android.R.drawable.sym_action_call)
+        override fun onBindViewHolder(vh: StarttilstandViewholder, position: Int) {
+            vh.overskrift.setText(starttilstande.get(position).position.toString())
+            vh.beskrivelse.text = starttilstande.get(position).rum.toString()
+            if (starttilstande.get(position).toString().hashCode() % 3 == 2) {
+                vh.billede.setImageResource(android.R.drawable.sym_action_call)
             } else {
-                vh.billede!!.setImageResource(android.R.drawable.sym_action_email)
+                vh.billede.setImageResource(android.R.drawable.sym_action_email)
             }
             //vh.itemView.isSelected = (homeViewModel.valgtRum == vh.adapterPosition);
-            vh.itemView.background = if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
+            vh.itemView.background = if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(
+                R.color.teal_200
+            ) else null
 
         }
     }
 
 
-    internal class RumViewholder(view: View) : RecyclerView.ViewHolder(view) {
+    internal class StarttilstandViewholder(view: View) : RecyclerView.ViewHolder(view) {
         var overskrift: TextView
         var beskrivelse: TextView
         var billede: ImageView
@@ -106,7 +126,7 @@ class HomeFragment : Fragment() {
 
 
     // Læs mere på https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf#.fjo359jbr
-    var simpleItemTouchCallback: ItemTouchHelper.SimpleCallback =
+    var starttilstandSimpleItemTouchCallback: ItemTouchHelper.SimpleCallback =
         object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,  // dragDirs
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -127,18 +147,18 @@ class HomeFragment : Fragment() {
             ): Boolean {
                 val position = vh.adapterPosition
                 val tilPos = target.adapterPosition
-                val land = rum.removeAt(position)
-                rum.add(tilPos, land)
-                Log.d("Lande", "Flyttet: $rum")
-                rumadapter.notifyItemMoved(position, tilPos)
+                val land = starttilstande.removeAt(position)
+                starttilstande.add(tilPos, land)
+                Log.d("Lande", "Flyttet: $starttilstande")
+                starttilstandadapter.notifyItemMoved(position, tilPos)
                 return true // false hvis rykket ikke skal foretages
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                rum.removeAt(position)
-                Log.d("Lande", "Slettet: $rum")
-                rumadapter.notifyItemRemoved(position)
+                starttilstande.removeAt(position)
+                Log.d("Lande", "Slettet: $starttilstande")
+                starttilstandadapter.notifyItemRemoved(position)
             }
 
             override fun clearView(recyclerView: RecyclerView, vh: RecyclerView.ViewHolder) {

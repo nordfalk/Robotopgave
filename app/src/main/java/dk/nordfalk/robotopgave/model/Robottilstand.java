@@ -1,10 +1,10 @@
 package dk.nordfalk.robotopgave.model;
 
-public class Robot {
-    Rum rum;
-    Position position;
+public class Robottilstand {
+    private Rum rum;
+    private Position position;
 
-    public Robot(Rum rum, Position position) {
+    public Robottilstand(Rum rum, Position position) {
         this.rum = rum;
         this.position = position;
         if (!rum.erLovligPosition(position)) throw new IllegalArgumentException("Ulovlig position "+position+" i rum "+rum);
@@ -45,5 +45,13 @@ public class Robot {
 
     public String getReport() {
         return position.x + " " + position.y + " " + position.retning;
+    }
+
+    public Rum getRum() {
+        return rum;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

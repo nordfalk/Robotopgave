@@ -8,7 +8,7 @@ public class Robottest {
 
         Position position = new Position(1,2, N);
 
-        Robot robot = new Robot(rum, position);
+        Robottilstand robot = new Robottilstand(rum, position);
         System.out.println("robot = " + robot);
 
         robot.execute("RFRFFRFRF");
