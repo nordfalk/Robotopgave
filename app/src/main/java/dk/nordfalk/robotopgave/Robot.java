@@ -35,4 +35,8 @@ public class Robot {
             position.y += retning.getDy();
         } else throw new IllegalArgumentException("Ugyldig instruks: '"+instruks+"'");
     }
+
+    public String getReport() {
+        return position.x + " " + position.y + " " + position.retning;
+    }
 }
