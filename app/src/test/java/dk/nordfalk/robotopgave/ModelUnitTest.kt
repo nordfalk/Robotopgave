@@ -24,11 +24,31 @@ class ModelUnitTest {
 
 
     @Test
+    fun forLidtPlads() {
+        val robot = Robot(Rum(1, 1), Position(0, 0, Retning.N))
+        robot.execute("RFRFFRFRF")
+        println("robot = " + robot.report)
+        assertEquals("0 0 N", robot.report)
+    }
+
+
+
+    @Test
     fun udleveretTest2() {
         val robot = Robot(Rum(5, 5), Position(0, 0, Retning.E))
         robot.execute("RFLFFLRF")
         println("robot = " + robot.report)
         assertEquals("3 1 E", robot.report)
     }
+
+
+    @Test
+    fun forLidtPlads2() {
+        val robot = Robot(Rum(1, 1), Position(0, 0, Retning.E))
+        robot.execute("RFLFFLRF")
+        println("robot = " + robot.report)
+        assertEquals("0 0 E", robot.report)
+    }
+
 
 }

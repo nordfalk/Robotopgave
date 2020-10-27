@@ -16,4 +16,10 @@ public class Rum {
                 ", højde=" + højde +
                 '}';
     }
+
+    public boolean erLovligPosition(Position pos) {
+        return 0<=pos.x && pos.x<bredde &&
+               0<=pos.y && pos.y<højde;
+
+    }
 }

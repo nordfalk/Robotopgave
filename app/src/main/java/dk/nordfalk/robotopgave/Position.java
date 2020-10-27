@@ -20,4 +20,9 @@ public class Position {
                 ", retning=" + retning +
                 '}';
     }
+
+
+    public Position kopi() {
+        return new Position(x, y, retning);
+    }
 }

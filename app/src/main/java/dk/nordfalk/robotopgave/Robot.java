@@ -7,6 +7,7 @@ public class Robot {
     public Robot(Rum rum, Position position) {
         this.rum = rum;
         this.position = position;
+        if (!rum.erLovligPosition(position)) throw new IllegalArgumentException("Ulovlig position "+position+" i rum "+rum);
     }
 
     @Override
@@ -31,8 +32,14 @@ public class Robot {
         } else if (instruks=='L') {
             position.retning = retning.tilVenstre();
         } else if (instruks=='F') {
-            position.x += retning.getDx();
-            position.y += retning.getDy();
+            Position nyPos = position.kopi();
+            nyPos.x += retning.getDx();
+            nyPos.y += retning.getDy();
+            if (rum.erLovligPosition(nyPos)) {
+                position = nyPos;
+            } else {
+                System.err.println("Robot kunne ikke gå mod "+retning+", da ny position ikke er lovlig i "+rum);
+            }
         } else throw new IllegalArgumentException("Ugyldig instruks: '"+instruks+"'");
     }
 
