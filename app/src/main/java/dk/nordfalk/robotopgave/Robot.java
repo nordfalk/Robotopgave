@@ -27,9 +27,9 @@ public class Robot {
     private void udfør1instruks(char instruks) {
         Retning retning = position.retning;
         if (instruks=='R') {
-            position.retning = retning.drejHøjre();
+            position.retning = retning.tilHøjre();
         } else if (instruks=='L') {
-            position.retning = retning.drejVenstre();
+            position.retning = retning.tilVenstre();
         } else if (instruks=='F') {
             position.x += retning.getDx();
             position.y += retning.getDy();

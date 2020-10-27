@@ -1,5 +1,6 @@
 package dk.nordfalk.robotopgave;
 
+/** En placering i et rum + retningen robotten vender */
 public class Position {
     int x;
     int y;
