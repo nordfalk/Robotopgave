@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import static dk.nordfalk.robotopgave.model.Retning.*;
 
 public class Model {
+
+    private Model instance;
+
+    public Model get() {
+        if (instance == null) instance = new Model();
+        return instance;
+    }
+
     public ArrayList<Robot> starttilstande = new ArrayList<>();
     public ArrayList<String> programmer = new ArrayList<>();
 
