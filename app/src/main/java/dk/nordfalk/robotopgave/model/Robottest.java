@@ -1,6 +1,6 @@
-package dk.nordfalk.robotopgave;
+package dk.nordfalk.robotopgave.model;
 
-import static dk.nordfalk.robotopgave.Retning.N;
+import static dk.nordfalk.robotopgave.model.Retning.N;
 
 public class Robottest {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave;
+package dk.nordfalk.robotopgave.model;
 
 
 /**

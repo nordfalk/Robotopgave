@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave;
+package dk.nordfalk.robotopgave.model;
 
 /** En placering i et rum + retningen robotten vender */
 public class Position {
