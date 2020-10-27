@@ -11,7 +11,8 @@ public class Robottest {
         Robot robot = new Robot(rum, position);
         System.out.println("robot = " + robot);
 
-        //robot.execute("RFRFFRFRF");
+        robot.execute("RFRFFRFRF");
 
+        System.out.println("robot = " + robot);
     }
 }
