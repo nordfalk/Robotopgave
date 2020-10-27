@@ -33,13 +33,19 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.home_frag, container, false)
 
 
+        fun buttonKørEnable() {
+            root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtstarttilstand.value != null;
+        }
+
         root.recyclerViewSituation.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewSituation.adapter = starttilstandadapter
         ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewSituation)
+        Model.get().valgtstarttilstand.observe(viewLifecycleOwner, { starttilstandadapter.notifyDataSetChanged() })
 
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
-        Model.get().programmer_livedata.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged() })
+        Model.get().programmer_livedata.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
+        Model.get().valgtProgram.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             root.buttonKør.text = it
@@ -61,10 +67,12 @@ class HomeFragment : Fragment() {
         return root
     }
 
+
+
     var programadapter: RecyclerView.Adapter<*> = object :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        var elem = Model.get().programmer
+
         override fun getItemCount(): Int {
-            return elem.size
+            return Model.get().programmer.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -74,8 +82,7 @@ class HomeFragment : Fragment() {
                 init {
                     itemView.setOnClickListener {
                         println("HURRA!!")
-                        homeViewModel.valgtProgram = adapterPosition;
-                        notifyDataSetChanged()
+                        Model.get().valgtProgram.value = Model.get().programmer[adapterPosition];
                     }
                 }
             }
@@ -84,45 +91,43 @@ class HomeFragment : Fragment() {
         override fun onBindViewHolder(vh: RecyclerView.ViewHolder, position: Int) {
             println("onBindViewHolder $position")
             val overskrift = vh.itemView.findViewById<TextView>(android.R.id.text1)
-            overskrift.setText(elem.get(position))
-            vh.itemView.background =
-                if (homeViewModel.valgtProgram == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
+            overskrift.setText(Model.get().programmer.get(position))
+            vh.itemView.background = if (Model.get().valgtProgram.value.equals(Model.get().programmer[vh.adapterPosition]))
+                    resources.getDrawable(R.color.teal_200) else null
         }
     }
 
 
 
 
-    var starttilstande = Model.get().starttilstande
+    var tilst = Model.get().starttilstande
     var starttilstandadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<StarttilstandViewholder>() {
 
         override fun getItemCount(): Int {
-            return starttilstande.size
+            return tilst.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
             val view: View = layoutInflater.inflate(R.layout.home_starttilstand_item, parent, false)
             val vh = StarttilstandViewholder(view)
-            println("HURRA!22!")
             view.setOnClickListener {
-                println("HURRA!!")
-                homeViewModel.valgtRum = vh.adapterPosition;
-                notifyDataSetChanged()
+                println("vh.adapterPosition = ${vh.adapterPosition}")
+                Model.get().valgtstarttilstand.value = tilst[vh.adapterPosition];
             }
             return vh
         }
 
         override fun onBindViewHolder(vh: StarttilstandViewholder, position: Int) {
-            vh.overskrift.setText(starttilstande.get(position).position.toString())
-            vh.beskrivelse.text = starttilstande.get(position).rum.toString()
-            if (starttilstande.get(position).toString().hashCode() % 3 == 2) {
+            vh.overskrift.setText(tilst.get(position).position.toString())
+            vh.beskrivelse.text = tilst.get(position).rum.toString()
+            if (tilst.get(position).toString().hashCode() % 3 == 2) {
                 vh.billede.setImageResource(android.R.drawable.sym_action_call)
             } else {
                 vh.billede.setImageResource(android.R.drawable.sym_action_email)
             }
             //vh.itemView.isSelected = (homeViewModel.valgtRum == vh.adapterPosition);
             vh.itemView.background =
-                if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
+                if (Model.get().valgtstarttilstand.value == tilst[vh.adapterPosition]) resources.getDrawable(R.color.teal_200) else null
 
         }
     }
@@ -163,17 +168,17 @@ class HomeFragment : Fragment() {
             ): Boolean {
                 val position = vh.adapterPosition
                 val tilPos = target.adapterPosition
-                val land = starttilstande.removeAt(position)
-                starttilstande.add(tilPos, land)
-                Log.d("Lande", "Flyttet: $starttilstande")
+                val land = tilst.removeAt(position)
+                tilst.add(tilPos, land)
+                Log.d("Lande", "Flyttet: $tilst")
                 starttilstandadapter.notifyItemMoved(position, tilPos)
                 return true // false hvis rykket ikke skal foretages
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                starttilstande.removeAt(position)
-                Log.d("Lande", "Slettet: $starttilstande")
+                tilst.removeAt(position)
+                Log.d("Lande", "Slettet: $tilst")
                 starttilstandadapter.notifyItemRemoved(position)
             }
 

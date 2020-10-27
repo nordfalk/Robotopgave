@@ -2,6 +2,8 @@ package dk.nordfalk.robotopgave.model;
 
 import androidx.lifecycle.MutableLiveData;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 
 import static dk.nordfalk.robotopgave.model.Retning.*;
@@ -9,6 +11,8 @@ import static dk.nordfalk.robotopgave.model.Retning.*;
 public class Model {
 
     private static Model instance;
+    public MutableLiveData<String> valgtProgram = new MutableLiveData<String>("");
+    public MutableLiveData<Robottilstand> valgtstarttilstand = new MutableLiveData<>();
 
     public static Model get() {
         if (instance == null) instance = new Model();
