@@ -1,5 +1,6 @@
 package dk.nordfalk.robotopgave.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -44,7 +45,7 @@ class HomeFragment : Fragment() {
 
         var recyclerView = root.recyclerViewSituation
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = rumadapter
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
@@ -55,33 +56,43 @@ class HomeFragment : Fragment() {
 
 
     // Vi laver en arrayliste så vi kan fjerne/indsætte elementer
-    var lande = Model.get().starttilstande
+    var rum = Model.get().starttilstande
 
 
-    var adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<ListeelemViewholder>() {
+    var rumadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RumViewholder>() {
+
         override fun getItemCount(): Int {
-            return lande.size
+            return rum.size
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListeelemViewholder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RumViewholder {
             val view: View = layoutInflater.inflate(R.layout.recycler_view_item, parent, false)
-            val vh = ListeelemViewholder(view)
+            val vh = RumViewholder(view)
+            println("HURRA!22!")
+            view.setOnClickListener {
+                println("HURRA!!")
+                homeViewModel.valgtRum = vh.adapterPosition;
+                notifyDataSetChanged()
+            }
             return vh
         }
 
-        override fun onBindViewHolder(vh: ListeelemViewholder, position: Int) {
-            vh.overskrift.setText(lande.get(position).report)
-            vh.beskrivelse!!.text = lande.get(position).toString()
+        override fun onBindViewHolder(vh: RumViewholder, position: Int) {
+            vh.overskrift.setText(rum.get(position).report)
+            vh.beskrivelse!!.text = rum.get(position).toString()
             if (position % 3 == 2) {
                 vh.billede!!.setImageResource(android.R.drawable.sym_action_call)
             } else {
                 vh.billede!!.setImageResource(android.R.drawable.sym_action_email)
             }
+            //vh.itemView.isSelected = (homeViewModel.valgtRum == vh.adapterPosition);
+            vh.itemView.background = if (homeViewModel.valgtRum == vh.adapterPosition) resources.getDrawable(R.color.teal_200) else null
+
         }
     }
 
 
-    internal class ListeelemViewholder(view: View) : RecyclerView.ViewHolder(view) {
+    internal class RumViewholder(view: View) : RecyclerView.ViewHolder(view) {
         var overskrift: TextView
         var beskrivelse: TextView
         var billede: ImageView
@@ -116,18 +127,18 @@ class HomeFragment : Fragment() {
             ): Boolean {
                 val position = vh.adapterPosition
                 val tilPos = target.adapterPosition
-                val land = lande.removeAt(position)
-                lande.add(tilPos, land)
-                Log.d("Lande", "Flyttet: $lande")
-                adapter.notifyItemMoved(position, tilPos)
+                val land = rum.removeAt(position)
+                rum.add(tilPos, land)
+                Log.d("Lande", "Flyttet: $rum")
+                rumadapter.notifyItemMoved(position, tilPos)
                 return true // false hvis rykket ikke skal foretages
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                lande.removeAt(position)
-                Log.d("Lande", "Slettet: $lande")
-                adapter.notifyItemRemoved(position)
+                rum.removeAt(position)
+                Log.d("Lande", "Slettet: $rum")
+                rumadapter.notifyItemRemoved(position)
             }
 
             override fun clearView(recyclerView: RecyclerView, vh: RecyclerView.ViewHolder) {
