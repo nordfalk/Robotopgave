@@ -4,11 +4,9 @@ import static dk.nordfalk.robotopgave.model.Retning.N;
 
 public class Robottest {
     public static void main(String[] args) {
-        Rum rum = new Rum(5,5);
+        Rum rum = new Rum(5,5, new Position(1,2, N));
 
-        Position position = new Position(1,2, N);
-
-        Robottilstand robot = new Robottilstand(rum, position);
+        Robot robot = new Robot(rum);
         System.out.println("robot = " + robot);
 
         robot.execute("RFRFFRFRF");

@@ -1,10 +1,10 @@
 package dk.nordfalk.robotopgave.model;
 
-/** En placering i et rum + retningen robotten vender */
+/** En placering i et rum + retningen robotten vender. Uforanderlig/immutable */
 public class Position {
-    int x;
-    int y;
-    Retning retning;
+    final int x;
+    final int y;
+    final Retning retning;
 
     public Position(int x, int y, Retning retning) {
         this.x = x;
@@ -19,10 +19,5 @@ public class Position {
                 ", y=" + y +
                 ", retning=" + retning +
                 '}';
-    }
-
-
-    public Position kopi() {
-        return new Position(x, y, retning);
     }
 }

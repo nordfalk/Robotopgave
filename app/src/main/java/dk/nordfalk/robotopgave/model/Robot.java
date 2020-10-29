@@ -1,12 +1,12 @@
 package dk.nordfalk.robotopgave.model;
 
-public class Robottilstand {
+public class Robot {
     private Rum rum;
     private Position position;
 
-    public Robottilstand(Rum rum, Position position) {
+    public Robot(Rum rum) {
         this.rum = rum;
-        this.position = position;
+        this.position = rum.startposition;
         if (!rum.erLovligPosition(position)) throw new IllegalArgumentException("Ulovlig position "+position+" i rum "+rum);
     }
 
@@ -28,13 +28,11 @@ public class Robottilstand {
     private void udfør1instruks(char instruks) {
         Retning retning = position.retning;
         if (instruks=='R') {
-            position.retning = retning.tilHøjre();
+            position = new Position(position.x, position.y, retning.tilHøjre());
         } else if (instruks=='L') {
-            position.retning = retning.tilVenstre();
+            position = new Position(position.x, position.y, retning.tilVenstre());
         } else if (instruks=='F') {
-            Position nyPos = position.kopi();
-            nyPos.x += retning.getDx();
-            nyPos.y += retning.getDy();
+            Position nyPos = new Position(position.x + retning.getDx(), position.y + retning.getDy(), retning);
             if (rum.erLovligPosition(nyPos)) {
                 position = nyPos;
             } else {

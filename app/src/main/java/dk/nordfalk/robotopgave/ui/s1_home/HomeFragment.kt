@@ -34,13 +34,13 @@ class HomeFragment : Fragment() {
 
 
         fun buttonKørEnable() {
-            root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtstarttilstand.value != null;
+            root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtRum.value != null;
         }
 
         root.recyclerViewSituation.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewSituation.adapter = starttilstandadapter
         ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewSituation)
-        Model.get().valgtstarttilstand.observe(viewLifecycleOwner, { starttilstandadapter.notifyDataSetChanged() })
+        Model.get().valgtRum.observe(viewLifecycleOwner, { starttilstandadapter.notifyDataSetChanged() })
 
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
@@ -98,13 +98,10 @@ class HomeFragment : Fragment() {
     }
 
 
-
-
-    var tilst = Model.get().starttilstande
     var starttilstandadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<StarttilstandViewholder>() {
 
         override fun getItemCount(): Int {
-            return tilst.size
+            return Model.get().rum.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
@@ -112,22 +109,22 @@ class HomeFragment : Fragment() {
             val vh = StarttilstandViewholder(view)
             view.setOnClickListener {
                 println("vh.adapterPosition = ${vh.adapterPosition}")
-                Model.get().valgtstarttilstand.value = tilst[vh.adapterPosition];
+                Model.get().valgtRum.value = Model.get().rum[vh.adapterPosition];
             }
             return vh
         }
 
         override fun onBindViewHolder(vh: StarttilstandViewholder, position: Int) {
-            vh.overskrift.setText(tilst.get(position).position.toString())
-            vh.beskrivelse.text = tilst.get(position).rum.toString()
-            if (tilst.get(position).toString().hashCode() % 3 == 2) {
+            vh.overskrift.setText(Model.get().rum.get(position).startposition.toString())
+            vh.beskrivelse.text = Model.get().rum.get(position).toString()
+            if (Model.get().rum.get(position).toString().hashCode() % 3 == 0) {
                 vh.billede.setImageResource(android.R.drawable.sym_action_call)
             } else {
                 vh.billede.setImageResource(android.R.drawable.sym_action_email)
             }
             //vh.itemView.isSelected = (homeViewModel.valgtRum == vh.adapterPosition);
             vh.itemView.background =
-                if (Model.get().valgtstarttilstand.value == tilst[vh.adapterPosition]) resources.getDrawable(R.color.teal_200) else null
+                if (Model.get().valgtRum.value == Model.get().rum[vh.adapterPosition]) resources.getDrawable(R.color.teal_200) else null
 
         }
     }
@@ -168,17 +165,17 @@ class HomeFragment : Fragment() {
             ): Boolean {
                 val position = vh.adapterPosition
                 val tilPos = target.adapterPosition
-                val land = tilst.removeAt(position)
-                tilst.add(tilPos, land)
-                Log.d("Lande", "Flyttet: $tilst")
+                val land = Model.get().rum.removeAt(position)
+                Model.get().rum.add(tilPos, land)
+                Log.d("Lande", "Flyttet: ${Model.get().rum}")
                 starttilstandadapter.notifyItemMoved(position, tilPos)
                 return true // false hvis rykket ikke skal foretages
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 val position = viewHolder.adapterPosition
-                tilst.removeAt(position)
-                Log.d("Lande", "Slettet: $tilst")
+                Model.get().rum.removeAt(position)
+                Log.d("Lande", "Slettet: ${Model.get().rum}")
                 starttilstandadapter.notifyItemRemoved(position)
             }
 

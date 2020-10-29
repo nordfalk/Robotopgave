@@ -1,12 +1,17 @@
 package dk.nordfalk.robotopgave.model;
 
+/**
+ * Rum og startposition (og retning) for robot i rummet. Uforanderlig/immutable
+ */
 public class Rum {
-    int bredde;
-    int højde;
+    public final int bredde;
+    public final int højde;
+    public final Position startposition;
 
-    public Rum(int bredde, int højde) {
+    public Rum(int bredde, int højde, Position startposition) {
         this.bredde = bredde;
         this.højde = højde;
+        this.startposition = startposition;
     }
 
     @Override
