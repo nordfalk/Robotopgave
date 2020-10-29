@@ -10,6 +10,7 @@ import dk.nordfalk.robotopgave.model.Rum
 
 class ExecuteRobotViewModel : ViewModel() {
 
+    var kører = false
     var robot: Robot
     var rum: Rum
     var program: String
