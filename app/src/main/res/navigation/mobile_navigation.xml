@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="dk.nordfalk.robotopgave.ui.s3_execute.NotificationsFragment"
+        android:name="dk.nordfalk.robotopgave.ui.s3_execute.ExecuteFragment"
         android:label="@string/title_s3_execute"
-        tools:layout="@layout/s3_notifications_frag" />
+        tools:layout="@layout/s3_execute_frag" />
 </navigation>
