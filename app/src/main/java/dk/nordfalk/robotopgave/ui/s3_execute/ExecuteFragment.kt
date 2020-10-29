@@ -46,6 +46,7 @@ class ExecuteFragment : Fragment() {
             vm.kør1Skridt()
         }
 
+        // https://freesound.org/people/dotY21/sounds/333174/
         val robotlyd = MediaPlayer.create(context, R.raw.robotlyd)
 
         root.imageButtonKoer.setOnClickListener {
@@ -56,8 +57,7 @@ class ExecuteFragment : Fragment() {
                     vm.kører = true
                     vm.kør1Skridt()
                     if (vm.program.length > 0 && isVisible) {
-                        handler.postDelayed(this, 200)
-                        // https://freesound.org/people/dotY21/sounds/333174/
+                        handler.postDelayed(this, 2000)
                         robotlyd.start()
                     } else {
                         vm.kører = false

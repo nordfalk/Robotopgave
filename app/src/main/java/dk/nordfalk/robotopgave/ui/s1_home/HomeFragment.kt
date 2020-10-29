@@ -47,11 +47,11 @@ class HomeFragment : Fragment() {
         Model.get().valgtProgram.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
 
         root.buttonKør.setOnClickListener {
-            findNavController().navigate(R.id.navigation_notifications)
+            findNavController().navigate(R.id.navigation_s3_execute)
         }
 
         root.fabTilfRum.setOnClickListener {
-            findNavController().navigate(R.id.navigation_dashboard)
+            findNavController().navigate(R.id.navigation_s2_nyt_rum)
         }
 
         root.fabTilfProgram.setOnClickListener {

@@ -3,4 +3,11 @@
     <string name="title_s1_home">Home</string>
     <string name="title_s2_rum">Nyt rum</string>
     <string name="title_s3_execute">1..2..3..Go!</string>
+
+    <string-array name="retninger_array">
+        <item>N</item>
+        <item>S</item>
+        <item>E</item>
+        <item>W</item>
+    </string-array>
 </resources>
