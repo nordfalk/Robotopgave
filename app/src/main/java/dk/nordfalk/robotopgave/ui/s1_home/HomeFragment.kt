@@ -1,6 +1,8 @@
 package dk.nordfalk.robotopgave.ui.s1_home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +11,6 @@ import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,43 +19,38 @@ import dk.nordfalk.robotopgave.R
 import dk.nordfalk.robotopgave.model.Model
 import kotlinx.android.synthetic.main.s1_home_frag.view.*
 import kotlinx.android.synthetic.main.s1_home_starttilstand_item.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.s1_home_frag, container, false)
 
 
-        fun buttonKørEnable() {
-            root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtRum.value != null;
-        }
 
-        root.recyclerViewSituation.layoutManager = LinearLayoutManager(activity)
-        root.recyclerViewSituation.adapter = starttilstandadapter
-        ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewSituation)
+        root.recyclerViewRum.layoutManager = LinearLayoutManager(activity)
+        root.recyclerViewRum.adapter = starttilstandadapter
+        ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewRum)
         Model.get().valgtRum.observe(viewLifecycleOwner, { starttilstandadapter.notifyDataSetChanged() })
 
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
+        fun buttonKørEnable() {
+            root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtRum.value != null;
+        }
         Model.get().programmer_livedata.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
         Model.get().valgtProgram.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
-
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            root.buttonKør.text = it
-        })
 
         root.buttonKør.setOnClickListener {
             findNavController().navigate(R.id.navigation_notifications)
         }
 
-        root.fabTilfStartsituation.setOnClickListener {
+        root.fabTilfRum.setOnClickListener {
             findNavController().navigate(R.id.navigation_dashboard)
         }
 
@@ -63,6 +58,14 @@ class HomeFragment : Fragment() {
             // DialogFragment har mulighed for at vises som en dialog
             NytProgramDialogFragment().show(parentFragmentManager, "dialog")
         }
+
+        //root.recyclerViewProgram.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY -> run{ println("XXXX11"); if (isVisible) { root.fabTilfProgram.shrink(); v.setOnScrollChangeListener(null)}} }
+        //root.recyclerViewRum.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY -> run{ println("XXXX22");root.fabTilfRum.shrink(); v.setOnScrollChangeListener(null)} }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            root.fabTilfProgram.shrink();
+            root.fabTilfRum.shrink();
+        } , 5000)
 
         return root
     }
