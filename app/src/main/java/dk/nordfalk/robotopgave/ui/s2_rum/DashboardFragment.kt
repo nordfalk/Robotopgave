@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave.ui.dashboard
+package dk.nordfalk.robotopgave.ui.s2_rum
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class DashboardFragment : Fragment() {
     ): View? {
         dashboardViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.dashboard_frag, container, false)
+        val root = inflater.inflate(R.layout.s2_nyt_rum_frag, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
         dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

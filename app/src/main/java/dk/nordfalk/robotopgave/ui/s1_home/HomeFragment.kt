@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave.ui.home
+package dk.nordfalk.robotopgave.ui.s1_home
 
 import android.os.Bundle
 import android.util.Log
@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.nordfalk.robotopgave.R
 import dk.nordfalk.robotopgave.model.Model
-import kotlinx.android.synthetic.main.home_frag.view.*
-import kotlinx.android.synthetic.main.home_starttilstand_item.view.*
+import kotlinx.android.synthetic.main.s1_home_frag.view.*
+import kotlinx.android.synthetic.main.s1_home_starttilstand_item.view.*
 
 class HomeFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.home_frag, container, false)
+        val root = inflater.inflate(R.layout.s1_home_frag, container, false)
 
 
         fun buttonKørEnable() {
@@ -108,7 +108,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
-            val view: View = layoutInflater.inflate(R.layout.home_starttilstand_item, parent, false)
+            val view: View = layoutInflater.inflate(R.layout.s1_home_starttilstand_item, parent, false)
             val vh = StarttilstandViewholder(view)
             view.setOnClickListener {
                 println("vh.adapterPosition = ${vh.adapterPosition}")

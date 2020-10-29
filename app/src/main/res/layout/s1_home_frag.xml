@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.s1_home.HomeFragment">
 
     <TextView
         android:id="@+id/overskriftVaelgSituation"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
-        android:text="Vælg en startsituation"
+        android:text="Vælg et rum"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/overskriftVaelgSituation"
         app:layout_constraintVertical_weight="1"
         tools:itemCount="3"
-        tools:listitem="@layout/home_starttilstand_item" />
+        tools:listitem="@layout/s1_home_starttilstand_item" />
 
     <TextView
         android:id="@+id/overskriftVaelgProgram"
@@ -55,7 +55,7 @@
         app:layout_constraintVertical_weight="1"
 
         tools:itemCount="3"
-        tools:listitem="@layout/home_starttilstand_item" />
+        tools:listitem="@layout/s1_home_starttilstand_item" />
 
     <Button
         android:id="@+id/buttonKør"

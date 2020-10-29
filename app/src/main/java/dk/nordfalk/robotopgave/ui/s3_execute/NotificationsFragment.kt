@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave.ui.notifications
+package dk.nordfalk.robotopgave.ui.s3_execute
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class NotificationsFragment : Fragment() {
     ): View? {
         notificationsViewModel =
                 ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.notifications_frag, container, false)
+        val root = inflater.inflate(R.layout.s3_notifications_frag, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

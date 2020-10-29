@@ -1,4 +1,4 @@
-package dk.nordfalk.robotopgave.ui.home
+package dk.nordfalk.robotopgave.ui.s1_home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

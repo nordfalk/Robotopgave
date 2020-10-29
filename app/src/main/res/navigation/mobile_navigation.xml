@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_s1_home">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="dk.nordfalk.robotopgave.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/home_frag" />
+        android:id="@+id/navigation_s1_home"
+        android:name="dk.nordfalk.robotopgave.ui.s1_home.HomeFragment"
+        android:label="@string/title_s1_home"
+        tools:layout="@layout/s1_home_frag" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="dk.nordfalk.robotopgave.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/dashboard_frag" />
+        android:name="dk.nordfalk.robotopgave.ui.s2_rum.DashboardFragment"
+        android:label="@string/title_s2_rum"
+        tools:layout="@layout/s2_nyt_rum_frag" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="dk.nordfalk.robotopgave.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/notifications_frag" />
+        android:name="dk.nordfalk.robotopgave.ui.s3_execute.NotificationsFragment"
+        android:label="@string/title_s3_execute"
+        tools:layout="@layout/s3_notifications_frag" />
 </navigation>
