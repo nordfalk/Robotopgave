@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- fra https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=ef485f -->
+    <color name="primaryColor">#ef485f</color>
+    <color name="primaryLightColor">#ff7d8c</color>
+    <color name="primaryDarkColor">#b60036</color>
+    <color name="primaryTextColor">#000000</color>
+
 </resources>
