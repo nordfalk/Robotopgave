@@ -47,7 +47,7 @@ class DashboardFragment : Fragment() {
                     rum.add(0, nytRum)
                     valgtRum.value = nytRum
                 }
-                findNavController().navigate(R.id.navigation_s1_home)
+                findNavController().navigateUp()
             } catch (e : Exception) {
                 e.printStackTrace()
                 Snackbar.make(root.buttonOpret, "Fejl: "+e, Snackbar.LENGTH_LONG).show()

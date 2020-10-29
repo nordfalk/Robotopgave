@@ -28,7 +28,7 @@ class NytProgramDialogFragment : DialogFragment() {
         root.buttonTilføj.setOnClickListener {
             val program = root.editTextProgram.text.toString();
             Model.get().programmer.add(0, program)
-            Model.get().programmer_livedata.value = "Tilf prg $root.editTextProgram.text"
+            Model.get().programmerObserver.value = "Tilf prg $root.editTextProgram.text"
             Model.get().valgtProgram.value = program
             dismiss()
         }

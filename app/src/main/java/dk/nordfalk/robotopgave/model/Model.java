@@ -8,18 +8,35 @@ import static dk.nordfalk.robotopgave.model.Retning.*;
 
 public class Model {
 
+    // Singleton
     private static Model instance;
-    public MutableLiveData<String> valgtProgram = new MutableLiveData<String>("");
-    public MutableLiveData<Rum> valgtRum = new MutableLiveData<>();
 
     public static Model get() {
         if (instance == null) instance = new Model();
         return instance;
     }
 
+    // Reinstantiering i frisk JVM
+    public static Boolean instantieret() {
+        return instance != null;
+    }
+
+    public void setFraModel(Model model) {
+        rum = model.rum;
+        programmer = model.programmer;
+        valgtProgram.setValue("");
+        valgtRum.setValue(null);
+    }
+
+
+    // Lister
     public ArrayList<Rum> rum = new ArrayList<>();
     public ArrayList<String> programmer = new ArrayList<>();
-    public MutableLiveData<String> programmer_livedata = new MutableLiveData<String>();
+    public transient MutableLiveData<String> programmerObserver = new MutableLiveData<String>();
+
+    // Brugervalg
+    public transient MutableLiveData<String> valgtProgram = new MutableLiveData<String>("");
+    public transient MutableLiveData<Rum> valgtRum = new MutableLiveData<>();
 
 
     public Model() {

@@ -2,6 +2,7 @@ package dk.nordfalk.robotopgave
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import dk.nordfalk.robotopgave.model.Model
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -34,6 +37,16 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
+        if (!Model.instantieret()) {
+            // Hent tidligere data persisteret som JSON i Prefs
+            val gson = Gson()
+            val json = PreferenceManager.getDefaultSharedPreferences(this).getString("model", null)
+            if (json!=null) {
+                val model = gson.fromJson(json, Model::class.java)
+                Model.get().setFraModel(model!!);
+            }
+
+        }
 
         if (savedInstanceState==null) {
             animationView.post {
@@ -45,5 +58,15 @@ class MainActivity : AppCompatActivity() {
             robotlyd!!.start()
             robotlyd!!.setOnCompletionListener { animationView.visibility = View.GONE }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Gem model som JSON i Prefs
+        val gson = Gson()
+        val json = gson.toJson(Model.get())
+        println("JSON streng = $json")
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("model", json).apply()
+
     }
 }

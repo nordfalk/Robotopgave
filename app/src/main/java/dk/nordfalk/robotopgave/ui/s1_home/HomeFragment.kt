@@ -19,8 +19,6 @@ import dk.nordfalk.robotopgave.R
 import dk.nordfalk.robotopgave.model.Model
 import kotlinx.android.synthetic.main.s1_home_frag.view.*
 import kotlinx.android.synthetic.main.s1_home_starttilstand_item.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -43,7 +41,7 @@ class HomeFragment : Fragment() {
         fun buttonKørEnable() {
             root.buttonKør.isEnabled = Model.get().valgtProgram.value!!.length>0 && Model.get().valgtRum.value != null;
         }
-        Model.get().programmer_livedata.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
+        Model.get().programmerObserver.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
         Model.get().valgtProgram.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
 
         root.buttonKør.setOnClickListener {
