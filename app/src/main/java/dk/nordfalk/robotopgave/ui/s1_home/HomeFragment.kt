@@ -30,11 +30,10 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.s1_home_frag, container, false)
 
 
-
         root.recyclerViewRum.layoutManager = LinearLayoutManager(activity)
-        root.recyclerViewRum.adapter = starttilstandadapter
+        root.recyclerViewRum.adapter = rumadapter
         ItemTouchHelper(starttilstandSimpleItemTouchCallback).attachToRecyclerView(root.recyclerViewRum)
-        Model.get().valgtRum.observe(viewLifecycleOwner, { starttilstandadapter.notifyDataSetChanged() })
+        Model.get().valgtRum.observe(viewLifecycleOwner, { rumadapter.notifyDataSetChanged() })
 
         root.recyclerViewProgram.layoutManager = LinearLayoutManager(activity)
         root.recyclerViewProgram.adapter = programadapter
@@ -43,6 +42,7 @@ class HomeFragment : Fragment() {
         }
         Model.get().programmerObserver.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
         Model.get().valgtProgram.observe(viewLifecycleOwner, { programadapter.notifyDataSetChanged(); buttonKørEnable() })
+        Model.get().valgtRum.observe(viewLifecycleOwner, { buttonKørEnable() })
 
         root.buttonKør.setOnClickListener {
             findNavController().navigate(R.id.navigation_s3_execute)
@@ -99,15 +99,16 @@ class HomeFragment : Fragment() {
     }
 
 
-    var starttilstandadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<StarttilstandViewholder>() {
+
+    var rumadapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RumViewholder>() {
 
         override fun getItemCount(): Int {
             return Model.get().rum.size
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarttilstandViewholder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RumViewholder {
             val view: View = layoutInflater.inflate(R.layout.s1_home_starttilstand_item, parent, false)
-            val vh = StarttilstandViewholder(view)
+            val vh = RumViewholder(view)
             view.setOnClickListener {
                 println("vh.adapterPosition = ${vh.adapterPosition}")
                 Model.get().valgtRum.value = Model.get().rum[vh.adapterPosition];
@@ -115,9 +116,9 @@ class HomeFragment : Fragment() {
             return vh
         }
 
-        override fun onBindViewHolder(vh: StarttilstandViewholder, position: Int) {
-            vh.overskrift.setText(Model.get().rum.get(position).startposition.toString())
-            vh.beskrivelse.text = Model.get().rum.get(position).toString()
+        override fun onBindViewHolder(vh: RumViewholder, position: Int) {
+            vh.overskrift.text = Model.get().rum.get(position).toString()
+            vh.beskrivelse.text = Model.get().rum.get(position).startposition.toString()
             if (Model.get().rum.get(position).toString().hashCode() % 3 == 0) {
                 vh.billede.setImageResource(android.R.drawable.sym_action_call)
             } else {
@@ -131,7 +132,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    internal class StarttilstandViewholder(view: View) : RecyclerView.ViewHolder(view) {
+    internal class RumViewholder(view: View) : RecyclerView.ViewHolder(view) {
         var overskrift: TextView
         var beskrivelse: TextView
         var billede: ImageView
@@ -144,7 +145,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    // Læs mere på https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf#.fjo359jbr
+    // Se https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf#.fjo359jbr
     var starttilstandSimpleItemTouchCallback: ItemTouchHelper.SimpleCallback =
         object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,  // dragDirs
@@ -169,7 +170,7 @@ class HomeFragment : Fragment() {
                 val land = Model.get().rum.removeAt(position)
                 Model.get().rum.add(tilPos, land)
                 Log.d("Lande", "Flyttet: ${Model.get().rum}")
-                starttilstandadapter.notifyItemMoved(position, tilPos)
+                rumadapter.notifyItemMoved(position, tilPos)
                 return true // false hvis rykket ikke skal foretages
             }
 
@@ -177,7 +178,7 @@ class HomeFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 Model.get().rum.removeAt(position)
                 Log.d("Lande", "Slettet: ${Model.get().rum}")
-                starttilstandadapter.notifyItemRemoved(position)
+                rumadapter.notifyItemRemoved(position)
             }
 
             override fun clearView(recyclerView: RecyclerView, vh: RecyclerView.ViewHolder) {

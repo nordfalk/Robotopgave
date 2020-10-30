@@ -3,6 +3,8 @@ package dk.nordfalk.robotopgave.model;
 public class Robot {
     private Rum rum;
     private Position position;
+    private String senesteInstruksfejl;
+    private char senesteInstruks;
 
     public Robot(Rum rum) {
         this.rum = rum;
@@ -27,6 +29,8 @@ public class Robot {
 
     private void udfør1instruks(char instruks) {
         Retning retning = position.retning;
+        senesteInstruks = instruks;
+        senesteInstruksfejl = null;
         if (instruks=='R') {
             position = new Position(position.x, position.y, retning.tilHøjre());
         } else if (instruks=='L') {
@@ -36,7 +40,8 @@ public class Robot {
             if (rum.erLovligPosition(nyPos)) {
                 position = nyPos;
             } else {
-                System.err.println("Robot kunne ikke gå mod "+retning+", da ny position ikke er lovlig i "+rum);
+                senesteInstruksfejl = "Robot kunne ikke gå mod "+retning+", da ny position ikke er lovlig i "+rum;
+                System.err.println(senesteInstruksfejl);
             }
         } else throw new IllegalArgumentException("Ugyldig instruks: '"+instruks+"'");
     }
@@ -51,5 +56,13 @@ public class Robot {
 
     public Position getPosition() {
         return position;
+    }
+
+    public String getSenesteInstruksfejl() {
+        return senesteInstruksfejl;
+    }
+
+    public char getSenesteInstruks() {
+        return senesteInstruks;
     }
 }

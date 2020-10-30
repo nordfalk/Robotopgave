@@ -33,7 +33,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="32dp"
         android:text="Robottens startplacering i rummet"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
@@ -45,10 +45,11 @@
         android:id="@+id/editTextRobotStartX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="4"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
@@ -66,7 +67,7 @@
         android:id="@+id/overskrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Opret nyt rum til robot"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -79,22 +80,22 @@
         android:id="@+id/editTextRumBredde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="4"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
         android:id="@+id/editTextRumHoejde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:ems="4"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/editTextRobotStartY"
         app:layout_constraintStart_toStartOf="@+id/editTextRobotStartY"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toTopOf="@+id/editTextRumBredde" />
 
     <TextView
         android:id="@+id/textView5"
@@ -118,7 +119,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="72dp"
         android:text="Rummets størrelse"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

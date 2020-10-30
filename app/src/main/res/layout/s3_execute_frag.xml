@@ -10,7 +10,7 @@
         android:id="@+id/overskrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Kør robotten i "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -34,20 +34,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
         android:text="2 2 E"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonKoer"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonKoer"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonKoer" />
+
+    <TextView
+        android:id="@+id/textViewInstuksfejl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Fejl"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/design_default_color_error"
+        android:textStyle="bold"
+        android:translationZ="10dp"
+        android:lines="3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton1Skridt" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:text="Program:  "
+        android:layout_marginTop="8dp"
+        android:text="Resterende instrukser:  "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overskrift" />
 
@@ -55,7 +72,7 @@
         android:id="@+id/textViewProgram"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,13 +87,49 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_koer_1_skridt_48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTilstand" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageButton
         android:id="@+id/imageButtonKoer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:src="@drawable/ic_koer_48dp"
         app:layout_constraintStart_toEndOf="@+id/imageButton1Skridt"
         app:layout_constraintTop_toTopOf="@+id/imageButton1Skridt" />
+
+
+    <LinearLayout
+        android:id="@+id/animationViewContainer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:translationZ="10dp"
+        app:layout_constraintStart_toStartOf="@+id/rumView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInstuksfejl">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginEnd="-50dp"
+            app:lottie_rawRes="@raw/lottie_robot_loeb"
+            app:lottie_scale="1" />
+
+    </LinearLayout>
+
+    <dk.nordfalk.robotopgave.ui.s3_execute.RumView
+        android:id="@+id/rumView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInstuksfejl">
+
+    </dk.nordfalk.robotopgave.ui.s3_execute.RumView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

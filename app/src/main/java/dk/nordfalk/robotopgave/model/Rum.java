@@ -17,10 +17,7 @@ public class Rum {
 
     @Override
     public String toString() {
-        return "Rum{" +
-                "bredde=" + bredde +
-                ", højde=" + højde +
-                '}';
+        return "Rum " + bredde + "x" + højde;
     }
 
     public boolean erLovligPosition(Position pos) {

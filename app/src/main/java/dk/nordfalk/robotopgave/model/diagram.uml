@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="876.0">dk.nordfalk.robotopgave.model.Robot</node>
+    <node x="85.5" y="400.0">dk.nordfalk.robotopgave.model.Position</node>
+    <node x="244.99999999999997" y="864.0">dk.nordfalk.robotopgave.model.Model</node>
+    <node x="219.12499999999997" y="608.0">dk.nordfalk.robotopgave.model.Rum</node>
+    <node x="94.0" y="0.0">dk.nordfalk.robotopgave.model.Retning</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="dk.nordfalk.robotopgave.model.Robot" target="dk.nordfalk.robotopgave.model.Rum">
+      <point x="56.25" y="-127.0" />
+      <point x="168.75" y="839.0" />
+      <point x="267.125" y="839.0" />
+      <point x="-96.0" y="103.0" />
+    </edge>
+    <edge source="dk.nordfalk.robotopgave.model.Position" target="dk.nordfalk.robotopgave.model.Retning">
+      <point x="0.0" y="-79.0" />
+      <point x="0.0" y="175.0" />
+    </edge>
+    <edge source="dk.nordfalk.robotopgave.model.Robot" target="dk.nordfalk.robotopgave.model.Position">
+      <point x="-56.25" y="-127.0" />
+      <point x="56.24999999999997" y="583.0" />
+      <point x="141.75" y="583.0" />
+      <point x="-56.25" y="79.0" />
+    </edge>
+    <edge source="dk.nordfalk.robotopgave.model.Model" target="dk.nordfalk.robotopgave.model.Rum">
+      <point x="-94.75" y="-139.0" />
+      <point x="339.75" y="839.0" />
+      <point x="363.125" y="839.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="dk.nordfalk.robotopgave.model.Rum" target="dk.nordfalk.robotopgave.model.Position">
+      <point x="0.0" y="-103.0" />
+      <point x="363.125" y="583.0" />
+      <point x="254.25" y="583.0" />
+      <point x="56.25" y="79.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="159.35714285714255" y="569.1666666666666" />
+  <SelectedNodes>
+    <node>dk.nordfalk.robotopgave.model.Model</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

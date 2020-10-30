@@ -1,5 +1,6 @@
 package dk.nordfalk.robotopgave
 
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -49,15 +50,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState==null) {
-            animationView.post {
+            animationView.post { // forsink til UI er klar og bredde er kendt
                 animationView.animate().setDuration(7000).setInterpolator(LinearInterpolator())
                     .translationXBy(animationView.width + container.width + 0f)
+                startRobotlyd()
             }
-            // https://freesound.org/people/dotY21/sounds/345973/
-            robotlyd = MediaPlayer.create(this, R.raw.robotlyd_lang)
-            robotlyd!!.start()
-            robotlyd!!.setOnCompletionListener { animationView.visibility = View.GONE }
         }
+    }
+
+    private fun startRobotlyd() {
+        volumeControlStream = AudioManager.STREAM_MUSIC
+
+        // Hvis lyden er lavere end 1/5 af fuld lydstyrke så skru volumen og til 1/5 af fuld lydstyrke
+        val audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        val fuldStyrke = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        val aktuelStyrke = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        if (aktuelStyrke < fuldStyrke / 5) {
+            audioManager.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                fuldStyrke / 5,
+                AudioManager.FLAG_SHOW_UI
+            )
+        }
+        // https://freesound.org/people/dotY21/sounds/345973/
+        robotlyd = MediaPlayer.create(this, R.raw.robotlyd_lang)
+        robotlyd!!.start()
+        robotlyd!!.setOnCompletionListener { animationView.visibility = View.GONE }
     }
 
     override fun onStop() {
@@ -68,5 +86,7 @@ class MainActivity : AppCompatActivity() {
         println("JSON streng = $json")
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("model", json).apply()
 
+        val lyd = robotlyd
+        if (lyd!=null && lyd.isPlaying) lyd.stop()
     }
 }

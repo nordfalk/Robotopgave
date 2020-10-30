@@ -1,5 +1,7 @@
 package dk.nordfalk.robotopgave.ui.s3_execute
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,5 +42,27 @@ class ExecuteRobotViewModel : ViewModel() {
         program = program.substring(1)
         robot.execute(skridt)
         _robottilstand.value = robot.report
+    }
+
+    val handler = Handler(Looper.getMainLooper());
+    val koer1skridtRunnable = object : Runnable {
+        override fun run() {
+            kører = true
+            kør1Skridt()
+            if (program.length > 0) { //  && isVisible
+                handler.postDelayed(this, 3000)
+            } else {
+                kører = false
+            }
+        }
+    }
+
+    fun kørAlleSkridt() {
+        koer1skridtRunnable.run()
+    }
+
+    override fun onCleared() { // Stop kørsel hvis man afslutter skærmbilledet
+        super.onCleared()
+        handler.removeCallbacks(koer1skridtRunnable)
     }
 }
